@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('YO') {
+            steps {
+                echo "Hello from Jenkins Pipeline"
+            }
+        }
+
+        stage('Create File') {
+            steps {
+                script {
+                    writeFile file: 'output.txt', text: "Pipeline ran successfully at ${new Date()}"
+                }
+            }
+        }
+     }
+
+     post {
+        always {
+            archiveArtifacts artifacts: 'output.txt', fingerprint: true
+        }
+    }
+}
+  
